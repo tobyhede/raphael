@@ -3080,6 +3080,20 @@ Raphael = (function () {
         delete animationElements[this.id];
         return this;
     };
+		Element[proto].pause = function () {		
+		    animationElements[this.id] && animationElements[length]--;
+		    this._paused_anim = animationElements[this.id];
+				this._pause_time = (+new Date) - animationElements[this.id].start;
+		    delete animationElements[this.id];
+		    return this;
+		};
+
+		Element[proto].unpause = function () {			
+   		this._paused_anim && (animationElements[this.id]=this._paused_anim);
+			animationElements[this.id].start = (+new Date) - this._pause_time;
+    	++animationElements[length] == 1 && animation();
+    	return this;		
+		};
     Element[proto].translate = function (x, y) {
         return this.attr({translation: x + " " + y});
     };
